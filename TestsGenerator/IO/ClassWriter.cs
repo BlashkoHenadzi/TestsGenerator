@@ -9,16 +9,23 @@ namespace TestsGenerator.IO
 {
     public class ClassWriter
     {
-        private static  void CheckDirectory(string path)
+        private readonly string path;
+
+        public ClassWriter(string path)
+        {
+            this.path = path;
+        }
+
+        private   void CheckDirectory()
         {
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);//TODO:cath exceprions;
 
         }
 
-        public static async Task Write(string path, List<ClassInfo> generatedClasses)
+        public  async Task Write( List<ClassInfo> generatedClasses)
         {
-            CheckDirectory(path);
+            CheckDirectory();
             foreach (ClassInfo classInfo in generatedClasses)
             {
                 using (StreamWriter writer = new StreamWriter(Path.Combine(path, "\\", classInfo.name)))
