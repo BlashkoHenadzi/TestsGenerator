@@ -28,13 +28,12 @@ namespace TestsGenerator.IO
             CheckDirectory();
             foreach (ClassInfo classInfo in generatedClasses)
             {
-                using (StreamWriter writer = new StreamWriter(Path.Combine(path, "\\", classInfo.name)))
+                using (FileStream writer = new FileStream(Path.Combine(path, classInfo.name+".cs"),FileMode.Create,FileAccess.Write))
                 {
-                    await writer.WriteAsync(classInfo.Body);
+                    byte[] bytes = Encoding.ASCII.GetBytes(classInfo.Body);
+                    await writer.WriteAsync(bytes, 0,bytes.Length);
                 }
             }
-
         }
-        
     }
 }
